@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foolscap — the keyboard-first scratchpad with superpowers</title>
+    <meta
+      name="description"
+      content="Foolscap — a minimal, ephemeral, keyboard-first scratchpad with an inline math engine, programmable timers, and an autopaste mode. Mac &amp; Windows."
+    />
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <a class="brand" href="/">
+        <img src="logo.svg" alt="" width="28" height="28" />
+        <span>foolscap</span>
+      </a>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#download">Download</a>
+        <a
+          href="https://github.com/Romain-Boudot/foolscap"
+          target="_blank"
+          rel="noopener"
+          >GitHub</a
+        >
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <img class="hero-logo" src="logo.svg" alt="Foolscap logo" />
+        <h1>The keyboard-first scratchpad<br />with superpowers.</h1>
+        <p class="lede">
+          Hit one hotkey, dump a thought, compute something, start a timer,
+          and move on. Notes auto-rotate. Math is inline. The desktop blurs
+          through the window. Built for the moments your text editor is too
+          much and a sticky note is too little.
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#download">Download for free</a>
+          <a
+            class="btn btn-ghost"
+            href="https://github.com/Romain-Boudot/foolscap"
+            target="_blank"
+            rel="noopener"
+            >View source</a
+          >
+        </div>
+        <p class="kbd-hint">
+          Press <kbd>Alt</kbd>&thinsp;+&thinsp;<kbd>A</kbd> anywhere to summon
+          it.
+        </p>
+      </section>
+
+      <section id="features" class="features">
+        <h2>Four pillars.</h2>
+        <div class="grid">
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">⏱</div>
+            <h3>Programmable timers</h3>
+            <p>
+              Type <code>timer 25m: focus</code>,
+              <code>every 1h x 8: water</code>, <code>at 14:30: standup</code>,
+              or <code>pomodoro 25/5 x 4</code>. They survive restart, fire a
+              chime &amp; toast, and run while the window is hidden.
+            </p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">∑</div>
+            <h3>Inline math &amp; money</h3>
+            <p>
+              Live calculator with named variables, reactive recalc, units
+              (<code>5 km en mi</code>), 30+ currencies refreshed from the ECB,
+              and aggregates over labelled ranges (<code>sum(*_revenue)</code>).
+            </p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">↘</div>
+            <h3>AutoPaste mode</h3>
+            <p>
+              Toggle once, then anything you copy from anywhere lands in the
+              current note automatically. Recording-dot indicator while it's
+              on. No more flipping back &amp; forth.
+            </p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">~</div>
+            <h3>Ephemeral by default</h3>
+            <p>
+              Notes you don't touch for a week disappear at the next launch.
+              Pin the ones that matter. The palette warns you before they go.
+              Knowledge base, this is not.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="aesthetic">
+        <h2>Slick where it counts.</h2>
+        <ul>
+          <li>
+            Native Windows 11 acrylic that <strong>doesn't dim</strong> when
+            the window loses focus.
+          </li>
+          <li>Light, dark, or follow system. Three background modes.</li>
+          <li>
+            Floating title and footer bars that fade in only when you reach
+            for them.
+          </li>
+          <li>
+            Tray icon with quick access to settings, new note, and pinned
+            notes.
+          </li>
+          <li>Custom toast notifications, scrollable, with a soft chime.</li>
+          <li>
+            Variable autocompletion in the editor, smart caret blink, custom
+            scrollbar, the works.
+          </li>
+        </ul>
+      </section>
+
+      <section id="download" class="download">
+        <h2>Download.</h2>
+        <p class="lede">
+          Free, source-available, local-only. No account, no telemetry, no
+          sync.
+        </p>
+        <div class="downloads">
+          <a class="btn btn-primary" href="#" data-os="windows">
+            <span class="os">Windows</span>
+            <span class="hint">.msi · soon</span>
+          </a>
+          <a class="btn btn-primary" href="#" data-os="macos">
+            <span class="os">macOS</span>
+            <span class="hint">.dmg · soon</span>
+          </a>
+        </div>
+        <p class="legal">
+          Source on
+          <a
+            href="https://github.com/Romain-Boudot/foolscap"
+            target="_blank"
+            rel="noopener"
+            >GitHub</a
+          >
+          under
+          <a
+            href="https://polyformproject.org/licenses/noncommercial/1.0.0"
+            target="_blank"
+            rel="noopener"
+            >PolyForm Noncommercial 1.0.0</a
+          >.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        © 2026 Romain Boudot. Built with Tauri, Vue, CodeMirror, mathjs, and
+        irrational care.
+      </p>
+    </footer>
+  </body>
+</html>

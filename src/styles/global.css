@@ -1,0 +1,146 @@
+:root,
+:root[data-theme="dark"] {
+  --bg: rgba(24, 24, 27, 0.88);
+  --bg-elev: rgba(40, 40, 44, 0.55);
+  --fg: #ececec;
+  --fg-dim: #8a8a90;
+  --accent: #7aa7ff;
+  --border: rgba(255, 255, 255, 0.07);
+  --selection: rgba(122, 167, 255, 0.28);
+
+  /* Bars and chrome */
+  --bar-bg: rgba(20, 20, 24, 0.28);
+
+  /* App inset border (top highlight + faint outline) */
+  --inset-highlight: rgba(255, 255, 255, 0.14);
+  --inset-outline: rgba(255, 255, 255, 0.09);
+
+  /* Heavier surface (palette, confirm) — sits over the .app bg */
+  --surface: rgba(28, 28, 32, 0.96);
+  --surface-border: rgba(255, 255, 255, 0.06);
+
+  /* Grid color used in cm-content background-image */
+  --grid-line: rgba(255, 255, 255, 0.04);
+
+  /* CSS tint layer on top of the OS acrylic (mode = blur) */
+  --bg-blur-layer: rgba(24, 24, 27, 0.32);
+
+  /* Math expression variable color in the editor */
+  --math-var: #a8c8e8;
+
+  /* Heading colors (h1 → h6) for the editor */
+  --heading-1: #ffd166;
+  --heading-2: #ff9e64;
+  --heading-3: #ff7eb6;
+  --heading-4: #c084fc;
+  --heading-5: #7aa7ff;
+  --heading-6: #5eead4;
+}
+
+:root[data-theme="light"] {
+  --bg: rgba(252, 250, 246, 0.92);
+  --bg-elev: rgba(0, 0, 0, 0.04);
+  --fg: #1a1a1f;
+  --fg-dim: #62626a;
+  --accent: #2f6dee;
+  --border: rgba(0, 0, 0, 0.09);
+  --selection: rgba(47, 109, 238, 0.22);
+
+  --bar-bg: rgba(255, 255, 255, 0.42);
+
+  --inset-highlight: rgba(255, 255, 255, 0.55);
+  --inset-outline: rgba(0, 0, 0, 0.1);
+
+  --surface: rgba(252, 252, 248, 0.96);
+  --surface-border: rgba(0, 0, 0, 0.07);
+
+  --grid-line: rgba(0, 0, 0, 0.05);
+
+  --bg-blur-layer: rgba(252, 252, 248, 0.42);
+
+  --math-var: #1e4eaa;
+
+  /* Saturated, darker headings for legibility on cream. */
+  --heading-1: #b45309;
+  --heading-2: #c2410c;
+  --heading-3: #be185d;
+  --heading-4: #7e22ce;
+  --heading-5: #1d4ed8;
+  --heading-6: #0f766e;
+}
+
+:root {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--fg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+
+#app {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-dim);
+}
+
+button {
+  background: transparent;
+  border: none;
+  color: var(--fg-dim);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease,
+    border-color 0.12s ease;
+}
+
+button:hover {
+  background: var(--bg-elev);
+  color: var(--fg);
+}
+
+button.active {
+  color: var(--accent);
+}
+
+button:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 1px;
+}
