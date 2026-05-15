@@ -3,11 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#faf9f5" media="(prefers-color-scheme: light)" />
     <title>Foolscap — the keyboard-first scratchpad with superpowers</title>
     <meta
       name="description"
       content="Foolscap — a minimal, ephemeral, keyboard-first scratchpad with an inline math engine, programmable timers, and an autopaste mode. Mac &amp; Windows."
     />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Foolscap — keyboard-first scratchpad with superpowers" />
+    <meta
+      property="og:description"
+      content="Inline math, programmable timers, autopaste, ephemeral notes. One hotkey, dump a thought, move on. Mac &amp; Windows."
+    />
+    <meta property="og:image" content="logo.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Foolscap — keyboard-first scratchpad" />
+    <meta
+      name="twitter:description"
+      content="Inline math, programmable timers, autopaste, ephemeral notes. One hotkey to summon."
+    />
+    <meta name="twitter:image" content="logo.svg" />
+
     <link rel="icon" type="image/svg+xml" href="logo.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -55,6 +73,99 @@
         </p>
       </section>
 
+      <section class="examples">
+        <div class="examples-intro">
+          <h2>This is what a note looks like.</h2>
+          <p>
+            Plain text in, live answers out. Variables stick, units convert,
+            timers tick, checkboxes toggle. Nothing else gets in the way.
+          </p>
+        </div>
+        <div class="example-grid">
+          <article class="note-mock" aria-label="Budget example">
+            <div class="note-mock-bar">
+              <span class="note-mock-dots"><span></span><span></span><span></span></span>
+              <span class="note-mock-title">budget · may</span>
+              <span class="note-mock-meta">3m ago</span>
+            </div>
+            <pre class="note-mock-body"><span class="h"># Monthly budget</span>
+
+<span class="v">salary</span> <span class="o">=</span> <span class="n">5500</span>
+<span class="v">rent</span> <span class="o">=</span> <span class="n">1450</span>
+<span class="v">groceries</span> <span class="o">=</span> <span class="n">480</span>
+<span class="v">subs</span> <span class="o">=</span> <span class="n">68</span>
+<span class="v">target</span> <span class="o">=</span> <span class="n">1000</span>
+
+<span class="c"># reactive — edit anything</span>
+<span class="v">spent</span> <span class="o">=</span> <span class="v">rent</span> <span class="o">+</span> <span class="v">groceries</span> <span class="o">+</span> <span class="v">subs</span>
+      <span class="o">→</span> <span class="r">1998</span>
+<span class="v">free</span>  <span class="o">=</span> <span class="v">salary</span> <span class="o">-</span> <span class="v">spent</span> <span class="o">-</span> <span class="v">target</span>
+      <span class="o">→</span> <span class="r">2502</span>
+
+<span class="v">free</span> <span class="k">in</span> <span class="u">eur</span>  <span class="o">→</span> <span class="r">2351.88</span> <span class="u">EUR</span><span class="caret"></span></pre>
+            <div class="note-mock-foot">
+              <span class="pin">●</span> pinned
+              <span style="margin-left:auto">↻ recalculates as you type</span>
+            </div>
+          </article>
+
+          <article class="note-mock" aria-label="Workday example">
+            <div class="note-mock-bar">
+              <span class="note-mock-dots"><span></span><span></span><span></span></span>
+              <span class="note-mock-title">tuesday</span>
+              <span class="note-mock-meta">live</span>
+            </div>
+            <pre class="note-mock-body"><span class="h"># Deep work block</span>
+
+<span class="k">pomodoro</span> <span class="n">25</span><span class="o">/</span><span class="n">5</span> <span class="k">x</span> <span class="n">4</span>    <span class="o">→</span> <span class="r">2/4 done</span>
+<span class="k">at</span> <span class="n">14:30</span><span class="o">:</span> <span class="s">standup</span>    <span class="o">→</span> <span class="r">in 1h12</span>
+<span class="k">every</span> <span class="n">45m</span><span class="o">:</span> <span class="s">stretch</span>   <span class="o">→</span> <span class="r">in 11m</span>
+
+<span class="h"># Today</span>
+<span class="done">[x] reply design feedback</span>
+<span class="done">[x] draft api proposal</span>
+<span class="todo">[ ] review PR #284</span>
+<span class="todo">[ ] update the changelog</span><span class="caret"></span>
+<span class="todo">[ ] book dentist</span>
+
+<span class="c"># 2 / 5 done — shown in title</span></pre>
+            <div class="note-mock-foot">
+              <span style="color:var(--ex-keyword)">⏱</span> 4 timers active
+              <span style="margin-left:auto">⌘⏎ to toggle a task</span>
+            </div>
+          </article>
+
+          <article class="note-mock" aria-label="Trip example">
+            <div class="note-mock-bar">
+              <span class="note-mock-dots"><span></span><span></span><span></span></span>
+              <span class="note-mock-title">lisbon trip</span>
+              <span class="note-mock-meta">autopaste</span>
+            </div>
+            <pre class="note-mock-body"><span class="h"># Lisbon — June</span>
+
+<span class="v">flight</span>  <span class="o">=</span> <span class="n">312</span> <span class="u">eur</span>
+<span class="v">night</span>   <span class="o">=</span> <span class="n">94</span> <span class="u">eur</span>
+<span class="v">food</span>    <span class="o">=</span> <span class="n">60</span> <span class="u">eur</span>
+<span class="v">nights</span>  <span class="o">=</span> <span class="n">4</span>
+
+<span class="v">stay</span>   <span class="o">=</span> <span class="v">night</span> <span class="o">*</span> <span class="v">nights</span>     <span class="o">→</span> <span class="r">376</span>
+<span class="v">meals</span>  <span class="o">=</span> <span class="v">food</span> <span class="o">*</span> (<span class="v">nights</span><span class="o">+</span><span class="n">1</span>)  <span class="o">→</span> <span class="r">300</span>
+<span class="v">total</span>  <span class="o">=</span> <span class="v">flight</span> <span class="o">+</span> <span class="v">stay</span> <span class="o">+</span> <span class="v">meals</span>
+       <span class="o">→</span> <span class="r">988</span> <span class="u">EUR</span>
+
+<span class="v">total</span> <span class="k">in</span> <span class="u">usd</span>  <span class="o">→</span> <span class="r">1077.92</span> <span class="u">USD</span>
+<span class="n">3</span> <span class="u">km</span> <span class="k">in</span> <span class="u">mi</span>     <span class="o">→</span> <span class="r">1.864</span> <span class="u">mi</span>
+
+<span class="c"># pasted from airline ↓</span>
+<span class="s">TAP TP441 · CDG → LIS</span><span class="caret"></span></pre>
+            <div class="note-mock-foot">
+              <span class="rec"></span> autopaste on
+              <span style="margin-left:auto">ECB rates · 2h old</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="features" class="features">
         <h2>Four pillars.</h2>
         <div class="grid">
@@ -100,26 +211,145 @@
 
       <section class="aesthetic">
         <h2>Slick where it counts.</h2>
-        <ul>
-          <li>
-            Native Windows 11 acrylic that <strong>doesn't dim</strong> when
-            the window loses focus.
-          </li>
-          <li>Light, dark, or follow system. Three background modes.</li>
-          <li>
-            Floating title and footer bars that fade in only when you reach
-            for them.
-          </li>
-          <li>
-            Tray icon with quick access to settings, new note, and pinned
-            notes.
-          </li>
-          <li>Custom toast notifications, scrollable, with a soft chime.</li>
-          <li>
-            Variable autocompletion in the editor, smart caret blink, custom
-            scrollbar, the works.
-          </li>
-        </ul>
+        <div class="aesthetic-grid">
+          <ul>
+            <li>
+              Native Windows 11 acrylic that <strong>doesn't dim</strong>
+              when the window loses focus.
+            </li>
+            <li>Light, dark, or follow system. Three background modes.</li>
+            <li>
+              Floating title and footer bars that fade in only when you reach
+              for them.
+            </li>
+            <li>
+              Tray icon with quick access to settings, new note, and pinned
+              notes.
+            </li>
+            <li>Custom toast notifications, scrollable, with a soft chime.</li>
+            <li>
+              Variable autocompletion in the editor, smart caret blink, custom
+              scrollbar, the works.
+            </li>
+          </ul>
+
+          <aside class="palette-mock" aria-label="Note palette preview">
+            <div class="palette-search">
+              <span class="prompt">⌘K</span>
+              <span class="query">lis<span class="caret"></span></span>
+              <span class="esc">esc</span>
+            </div>
+            <ul class="palette-list">
+              <li class="active">
+                <span class="idx">1</span>
+                <span class="pin-dot">●</span>
+                <span>lisbon trip</span>
+                <span class="preview">flight = 312 eur · 4 nights …</span>
+              </li>
+              <li>
+                <span class="idx">2</span>
+                <span>budget · may</span>
+                <span class="preview">salary = 5500 · spent = 1998</span>
+              </li>
+              <li>
+                <span class="idx">3</span>
+                <span>tuesday</span>
+                <span class="preview">pomodoro 2 / 4 · 3 tasks open</span>
+              </li>
+              <li>
+                <span class="idx">4</span>
+                <span>API jot</span>
+                <span class="ttl">expires in 2d</span>
+              </li>
+              <li>
+                <span class="idx">5</span>
+                <span>standup notes</span>
+                <span class="ttl">expires in 5d</span>
+              </li>
+            </ul>
+            <div class="palette-foot">
+              <span><kbd>↑↓</kbd> move</span>
+              <span><kbd>⏎</kbd> open</span>
+              <span><kbd>⌘P</kbd> pin</span>
+              <span><kbd>⌫</kbd> delete</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="shortcuts">
+        <h2>Every action, one keystroke away.</h2>
+        <p class="shortcuts-sub">
+          The mouse is allowed but never required. Defaults shown — all
+          remappable in settings.
+        </p>
+        <div class="shortcut-grid">
+          <div class="shortcut-group">
+            <h3>Summon</h3>
+            <ul class="shortcut-list">
+              <li>
+                <span class="label">Show / hide window</span>
+                <span class="keys"><kbd>Alt</kbd>+<kbd>A</kbd></span>
+              </li>
+              <li>
+                <span class="label">New blank note</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>N</kbd></span>
+              </li>
+              <li>
+                <span class="label">Open palette</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>K</kbd></span>
+              </li>
+              <li>
+                <span class="label">Clipboard history</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>⇧</kbd>+<kbd>V</kbd></span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="shortcut-group">
+            <h3>Navigate</h3>
+            <ul class="shortcut-list">
+              <li>
+                <span class="label">Next / prev note</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>→</kbd></span>
+              </li>
+              <li>
+                <span class="label">Pin / unpin</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>P</kbd></span>
+              </li>
+              <li>
+                <span class="label">Toggle always-on-top</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>⇧</kbd>+<kbd>T</kbd></span>
+              </li>
+              <li>
+                <span class="label">Settings</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>,</kbd></span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="shortcut-group">
+            <h3>Edit</h3>
+            <ul class="shortcut-list">
+              <li>
+                <span class="label">Toggle checkbox</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>⏎</kbd></span>
+              </li>
+              <li>
+                <span class="label">Move line</span>
+                <span class="keys"><kbd>Alt</kbd>+<kbd>↑↓</kbd></span>
+              </li>
+              <li>
+                <span class="label">Clear done tasks</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>⇧</kbd>+<kbd>X</kbd></span>
+              </li>
+              <li>
+                <span class="label">AutoPaste on / off</span>
+                <span class="keys"><kbd>Ctrl</kbd>+<kbd>⇧</kbd>+<kbd>P</kbd></span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section id="download" class="download">
@@ -129,15 +359,29 @@
           sync.
         </p>
         <div class="downloads">
-          <a class="btn btn-primary" href="#" data-os="windows">
+          <a
+            class="btn btn-primary"
+            href="https://github.com/Romain-Boudot/foolscap/releases/download/v0.1.0/Foolscap_0.1.0_x64_en-US.msi"
+            data-os="windows"
+          >
             <span class="os">Windows</span>
-            <span class="hint">.msi · soon</span>
+            <span class="hint">.msi · v0.1.0 · 3 MB</span>
           </a>
-          <a class="btn btn-primary" href="#" data-os="macos">
+          <a class="btn btn-primary" href="#" data-os="macos" data-soon aria-disabled="true">
             <span class="os">macOS</span>
             <span class="hint">.dmg · soon</span>
           </a>
         </div>
+        <p class="release-note">
+          Windows 10/11 · x64. Unsigned for now — SmartScreen will ask
+          “More info → Run anyway”. Prefer
+          <a
+            href="https://github.com/Romain-Boudot/foolscap/releases/tag/v0.1.0"
+            target="_blank"
+            rel="noopener"
+            >.exe or other assets</a
+          >?
+        </p>
         <p class="legal">
           Source on
           <a
