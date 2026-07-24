@@ -1,4 +1,4 @@
-import Database from "@tauri-apps/plugin-sql";
+import Database from "../../bridge/sql";
 import { ref } from "vue";
 import {
   type CurrencyRates,

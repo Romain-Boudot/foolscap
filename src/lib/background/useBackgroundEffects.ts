@@ -1,5 +1,5 @@
 import { watch } from "vue";
-import { invoke } from "@tauri-apps/api/core";
+import { invoke } from "../../bridge/core";
 import { bgMode, type BgMode } from "./backgroundSettings";
 import { effectiveTheme } from "../theme/useTheme";
 

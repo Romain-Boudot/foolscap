@@ -1,6 +1,6 @@
 import { ref } from "vue";
-import { emit, listen } from "@tauri-apps/api/event";
-import Database from "@tauri-apps/plugin-sql";
+import { emit, listen } from "../../bridge/event";
+import Database from "../../bridge/sql";
 
 const MODE_KEY = "bg_mode";
 const GRID_KEY = "bg_grid";

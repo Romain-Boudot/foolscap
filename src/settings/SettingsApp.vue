@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from "vue";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "../bridge/window";
 import { useShortcuts } from "../lib/shortcuts/useShortcuts";
 import {
   bgMode,
@@ -68,11 +68,6 @@ function close() {
   void win.hide();
 }
 
-function onMouseDown(e: MouseEvent) {
-  if ((e.target as HTMLElement).closest("button")) return;
-  if (e.buttons === 1) void win.startDragging();
-}
-
 useShortcuts({
   escape: () => close(),
   "mod+,": () => close(),
@@ -85,7 +80,7 @@ useShortcuts({
     class="settings-app"
     :class="[`bg-${bgMode}`]"
   >
-    <header class="title-bar" @mousedown="onMouseDown">
+    <header class="title-bar">
       <span class="brand">foolscap <span class="sep">/</span> settings</span>
       <button class="close" title="Close (Esc)" @click="close">×</button>
     </header>
@@ -154,6 +149,7 @@ useShortcuts({
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   cursor: default;
+  -webkit-app-region: drag;
 }
 
 .brand {
@@ -178,6 +174,7 @@ useShortcuts({
   border-radius: 5px;
   font-size: 14px;
   line-height: 1;
+  -webkit-app-region: no-drag;
 }
 .title-bar .close:hover {
   background: rgba(255, 80, 80, 0.18);

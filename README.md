@@ -39,7 +39,7 @@ touch for a week disappear at the next launch.
 
 ## Install
 
-**Windows 10/11 · x64** — grab the `.msi` from
+**Windows 10/11 · x64** — grab the installer (`.exe`) from
 [the latest release](https://github.com/Romain-Boudot/foolscap/releases/latest).
 Unsigned for now; SmartScreen will ask "More info → Run anyway".
 
@@ -50,23 +50,25 @@ Unsigned for now; SmartScreen will ask "More info → Run anyway".
 ```sh
 git clone https://github.com/Romain-Boudot/foolscap
 cd foolscap
-npm install
-npm run tauri dev
+npm install           # postinstall rebuilds better-sqlite3 for Electron
+npm run dev
 ```
 
-You'll need [Rust](https://rustup.rs) and the
-[Tauri 2 prerequisites](https://v2.tauri.app/start/prerequisites/) for your
-platform (WebView2 on Windows, Xcode CLT on macOS).
+You'll need [Node.js](https://nodejs.org) 18+. `npm install` runs
+`electron-builder install-app-deps`, which compiles the native SQLite module
+against Electron's ABI, so a C/C++ toolchain is required (Build Tools on
+Windows, Xcode CLT on macOS, `build-essential` on Linux).
 
 ```sh
-npm run tauri build   # produce platform installers in src-tauri/target/release/bundle
+npm run dist          # produce platform installers in release/
 npm test              # vitest — math evaluator, parsers, paste transforms
 ```
 
 ## Stack
 
-Tauri 2 · Rust · Vue 3 · TypeScript · Vite · CodeMirror 6 · mathjs · SQLite.
-~5 MB installer, no Electron, no Node runtime shipped.
+Electron · Vue 3 · TypeScript · Vite · CodeMirror 6 · mathjs · SQLite
+(better-sqlite3). Main process handles the windows, tray, global hotkey, and
+storage; the renderer is the Vue app.
 
 See [CLAUDE.md](CLAUDE.md) for the architectural decisions, data model, and
 roadmap.

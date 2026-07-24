@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "./bridge/window";
 import App from "./App.vue";
 import SettingsApp from "./settings/SettingsApp.vue";
 import ToastApp from "./toast/ToastApp.vue";

@@ -4,7 +4,7 @@ import { EditorState } from "@codemirror/state";
 import { EditorView, keymap, placeholder } from "@codemirror/view";
 import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
 import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
-import { writeText } from "@tauri-apps/plugin-clipboard-manager";
+import { writeText } from "../../bridge/clipboard";
 import { editorTheme } from "./theme";
 import { mathExtension, refreshMathEffect } from "../math/extension";
 import { ratesVersion } from "../math/rates";

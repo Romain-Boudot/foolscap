@@ -1,7 +1,7 @@
 import { onBeforeUnmount, watch, type Ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
-import { listen, type UnlistenFn } from "@tauri-apps/api/event";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import { invoke } from "../../bridge/core";
+import { listen, type UnlistenFn } from "../../bridge/event";
+import { getCurrentWindow } from "../../bridge/window";
 import type { Note } from "../notes/useNotes";
 import { noteTitle } from "../notes/title";
 

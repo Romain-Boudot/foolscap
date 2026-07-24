@@ -1,6 +1,6 @@
 import { ref } from "vue";
-import { emit, listen } from "@tauri-apps/api/event";
-import Database from "@tauri-apps/plugin-sql";
+import { emit, listen } from "../../bridge/event";
+import Database from "../../bridge/sql";
 
 const DAY_MS = 86_400_000;
 const HOUR_MS = 3_600_000;

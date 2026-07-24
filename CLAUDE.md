@@ -23,15 +23,14 @@ This is **not** Notion, Obsidian, or Evernote. It is **not** a knowledge base. I
 
 ## Stack
 
-- **Framework:** Tauri 2.x (Rust backend, web frontend)
-- **Frontend:** TypeScript + Vite + a lightweight UI lib (Svelte or Solid recommended — React is overkill for this)
-- **Storage:** SQLite via `tauri-plugin-sql` (local-only, no cloud in v1)
-- **Math engine:** `mathjs` (JS) or a Rust-side equivalent — decision deferred, see Open Questions
-- **Global hotkey:** `tauri-plugin-global-shortcut`
-- **Clipboard:** `tauri-plugin-clipboard-manager`
-- **Window management:** custom Rust commands for translucency, always-on-top, multi-mode (dock/menu/dropdown)
+- **Framework:** Electron (Node main process + Chromium renderer). Built and bundled with `electron-vite`; packaged with `electron-builder`.
+- **Frontend:** Vue 3 + TypeScript + Vite (renderer).
+- **Storage:** SQLite via `better-sqlite3` in the main process, exposed to the renderer over IPC (local-only, no cloud in v1).
+- **Math engine:** `mathjs` (JS).
+- **Global hotkey / clipboard / tray / windows:** Electron `globalShortcut`, `clipboard`, `Tray`, and `BrowserWindow` — all driven from the main process (`electron/main.ts`).
+- **Renderer ↔ main bridge:** a `contextBridge` preload (`electron/preload.ts`) exposes `window.foolscap`; the renderer imports thin shims from `src/bridge/*` that reproduce the small API surface the app was written against.
 
-**Why Tauri:** small bundle (~5MB vs ~100MB Electron), native window chrome, real cross-platform, Rust backend gives us serious power for clipboard watching, hotkey handling, and SQLite without Node bloat.
+**Migration note:** the app originally shipped on Tauri 2 (Rust backend, `src-tauri/`). It was migrated to Electron. The old Tauri-specific window tricks that don't have a portable Electron equivalent (the undocumented `SetWindowCompositionAttribute` acrylic, forced Win11 corners) are replaced by Electron built-ins (`setBackgroundMaterial` / `setVibrancy`, default `roundedCorners`), best-effort per platform.
 
 ---
 
@@ -66,7 +65,7 @@ Beyond simple inline math. Think: a programmable scratchpad calculator.
 - **Notifications:** native OS notif + optional full-screen alert + optional sound
 - **Menu bar countdown** for the active timer
 
-**Implementation note:** timers persist across app restarts (store next-fire timestamp in SQLite). A Rust background task handles firing even when the window is hidden.
+**Implementation note:** timers persist across app restarts (store next-fire timestamp in SQLite). A single "timer hub" runs in the hidden toast window's renderer (with `backgroundThrottling` disabled) so timers keep firing even when every visible window is hidden — no per-window duplication.
 
 ### 3. Checklists
 
@@ -99,29 +98,31 @@ The most underrated Antinote feature, pushed further.
 ## Architecture
 
 ```
-scratchpad/
-├── src-tauri/              # Rust backend
-│   ├── src/
-│   │   ├── main.rs
-│   │   ├── commands/       # Tauri commands exposed to frontend
-│   │   │   ├── notes.rs    # CRUD on notes
-│   │   │   ├── timers.rs   # timer scheduling & firing
-│   │   │   ├── clipboard.rs # clipboard watcher & history
-│   │   │   └── window.rs   # window mode, translucency, always-on-top
-│   │   ├── db/             # SQLite schema & migrations
-│   │   ├── hotkey.rs       # global shortcut registration
-│   │   └── parser/         # optional: Rust-side math parsing (TBD)
-│   └── tauri.conf.json
-├── src/                    # Frontend (Svelte or Solid)
+foolscap/
+├── electron/               # Electron main process (Node) — replaces src-tauri
+│   ├── main.ts             # windows, tray, Alt+A hotkey, single-instance, IPC
+│   ├── preload.ts          # contextBridge → window.foolscap
+│   └── db.ts               # SQLite (better-sqlite3) + schema/migration
+├── src/                    # Renderer — Vue 3 + TypeScript
+│   ├── bridge/             # thin shims reproducing the old Tauri API surface
+│   │   ├── sql.ts          # Database.load/select/execute (→ IPC)
+│   │   ├── event.ts        # emit/listen cross-window bus
+│   │   ├── core.ts         # invoke(cmd) → main-process command
+│   │   ├── window.ts       # getCurrentWindow / currentMonitor
+│   │   └── clipboard.ts    # readText / writeText
 │   ├── lib/
-│   │   ├── editor/         # text editor component (custom, not CodeMirror — too heavy)
+│   │   ├── editor/         # CodeMirror 6 editor component
 │   │   ├── math/           # math evaluator (mathjs wrapper)
-│   │   ├── timers/         # timer UI + countdown display
+│   │   ├── timers/         # timer parser + hub (runs in the toast window)
 │   │   ├── checklist/      # checklist parser & renderer
 │   │   ├── paste/          # paste handlers & transformations
-│   │   └── themes/         # theme system
-│   ├── routes/             # if using SvelteKit, otherwise single-page
-│   └── app.html
+│   │   └── theme/          # theme system
+│   ├── settings/           # settings window app
+│   ├── toast/              # toast/notification window app
+│   └── main.ts             # renderer entry — mounts App/Settings/Toast by label
+├── electron.vite.config.ts # electron-vite: main + preload + renderer builds
+├── resources/              # runtime assets (tray icon) bundled via extraResources
+├── build/                  # installer icons for electron-builder
 ├── CLAUDE.md
 ├── README.md
 └── package.json
@@ -199,9 +200,8 @@ Keep scope tight. Better to ship 4 features that feel like magic than 14 that fe
 
 ## Code style & conventions
 
-- **TypeScript strict mode.** No `any` unless justified in a comment.
-- **Rust:** `cargo fmt` + `cargo clippy -- -D warnings` clean before commit.
-- **No unnecessary dependencies.** Every npm/crate addition needs a one-line justification in the PR.
+- **TypeScript strict mode.** No `any` unless justified in a comment. Applies to the renderer (`src/`) and the Electron main process (`electron/`) alike.
+- **No unnecessary dependencies.** Every npm addition needs a one-line justification in the PR.
 - **Components small and pure.** UI logic separated from business logic.
 - **Math, timer, and parser modules:** pure functions with unit tests. These are the spots bugs hide.
 - **Latency budget:** every user-facing action under 50ms (eval, save, render). Profile if not.
@@ -210,9 +210,8 @@ Keep scope tight. Better to ship 4 features that feel like magic than 14 that fe
 
 ## Testing
 
-- Rust: `cargo test` for parsers, timer scheduling logic, DB layer
-- Frontend: Vitest for math evaluator, checklist parser, paste transformations
-- E2E (later): Playwright or WebDriver for Tauri — defer until v1 is feature-complete
+- Vitest for the pure logic: math evaluator, checklist/timer parsers, paste transformations, ephemeral helpers
+- E2E (later): Playwright (Electron support) — defer until v1 is feature-complete
 - **No tests for UI styling.** Visual regression is not worth the setup at this stage.
 
 ---

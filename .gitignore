@@ -11,23 +11,20 @@ bun-debug.log*
 # Dependencies
 node_modules
 
-# Vite build output
+# Build output
 dist
 dist-ssr
 .vite
+
+# Electron build artifacts
+out
+release
 
 # Local env
 *.local
 .env
 .env.local
 .env.*.local
-
-# Tauri build artifacts
-src-tauri/target
-src-tauri/gen
-
-# Local Tauri overrides
-src-tauri/tauri.dev.conf.json
 
 # Editor directories and files
 .vscode/*

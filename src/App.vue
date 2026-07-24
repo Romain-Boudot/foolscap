@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import { invoke } from "./bridge/core";
+import { getCurrentWindow } from "./bridge/window";
 import Editor from "./lib/editor/Editor.vue";
 import TitleBar from "./lib/ui/TitleBar.vue";
 import FooterBar from "./lib/ui/FooterBar.vue";

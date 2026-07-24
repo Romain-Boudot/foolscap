@@ -2,7 +2,7 @@
 import logoUrl from "../../assets/logo.svg";
 
 const STACK = [
-  { name: "Tauri 2", what: "Native window, Rust backend, ~5MB bundle" },
+  { name: "Electron", what: "Native windows, tray, global hotkey" },
   { name: "Vue 3", what: "Frontend, Composition API" },
   { name: "CodeMirror 6", what: "Text editor" },
   { name: "mathjs", what: "Math engine, units, conversions" },

@@ -1,5 +1,5 @@
-import { listen, type UnlistenFn } from "@tauri-apps/api/event";
-import Database from "@tauri-apps/plugin-sql";
+import { listen, type UnlistenFn } from "../../bridge/event";
+import Database from "../../bridge/sql";
 import { parseTimerLine, formatDuration, type TimerSpec } from "./parser";
 import { createTimer, advance, type ActiveTimer } from "./state";
 import { pushToast } from "../toast/store";

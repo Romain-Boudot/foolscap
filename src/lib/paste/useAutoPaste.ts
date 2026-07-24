@@ -1,5 +1,5 @@
 import { onBeforeUnmount, watch, type Ref } from "vue";
-import { readText } from "@tauri-apps/plugin-clipboard-manager";
+import { readText } from "../../bridge/clipboard";
 
 const POLL_MS = 800;
 

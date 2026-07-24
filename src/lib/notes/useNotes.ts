@@ -1,7 +1,7 @@
 import { computed, onBeforeUnmount, ref, watch } from "vue";
-import Database from "@tauri-apps/plugin-sql";
-import { emit, listen, type UnlistenFn } from "@tauri-apps/api/event";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import Database from "../../bridge/sql";
+import { emit, listen, type UnlistenFn } from "../../bridge/event";
+import { getCurrentWindow } from "../../bridge/window";
 import {
   ephemeralLifetimeDays,
   loadEphemeralSettings,

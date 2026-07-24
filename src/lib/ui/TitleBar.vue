@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getCurrentWindow } from "@tauri-apps/api/window";
 import IconPin from "./icons/IconPin.vue";
 import IconClose from "./icons/IconClose.vue";
 import IconAutoPaste from "./icons/IconAutoPaste.vue";
@@ -19,19 +18,15 @@ defineEmits<{
   (e: "hide"): void;
 }>();
 
-const win = getCurrentWindow();
-
-function onMouseDown(e: MouseEvent) {
-  if ((e.target as HTMLElement).closest("button")) return;
-  if (e.buttons === 1) win.startDragging();
-}
+// Dragging is handled by CSS `-webkit-app-region: drag` on the title bar
+// (see the style block below) — Electron's native way to move a frameless
+// window. Buttons opt back out with `-webkit-app-region: no-drag`.
 </script>
 
 <template>
   <header
     class="title-bar"
     :class="{ hidden: !visible }"
-    @mousedown="onMouseDown"
   >
     <span class="brand">foolscap</span>
     <div class="actions">
@@ -85,6 +80,7 @@ function onMouseDown(e: MouseEvent) {
   backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%);
   cursor: default;
+  -webkit-app-region: drag;
   transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .title-bar.hidden {
@@ -114,6 +110,7 @@ function onMouseDown(e: MouseEvent) {
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+  -webkit-app-region: no-drag;
 }
 
 .actions button.close:hover {

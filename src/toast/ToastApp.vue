@@ -4,7 +4,7 @@ import {
   currentMonitor,
   getCurrentWindow,
   PhysicalPosition,
-} from "@tauri-apps/api/window";
+} from "../bridge/window";
 import ToastStack from "../lib/toast/ToastStack.vue";
 import { toasts } from "../lib/toast/store";
 import { startTimerHub, stopTimerHub } from "../lib/timers/hub";
