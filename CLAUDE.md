@@ -25,7 +25,7 @@ This is **not** Notion, Obsidian, or Evernote. It is **not** a knowledge base. I
 
 - **Framework:** Electron (Node main process + Chromium renderer). Built and bundled with `electron-vite`; packaged with `electron-builder`.
 - **Frontend:** Vue 3 + TypeScript + Vite (renderer).
-- **Storage:** SQLite via `better-sqlite3` in the main process, exposed to the renderer over IPC (local-only, no cloud in v1).
+- **Storage:** SQLite via `sql.js` (SQLite compiled to WebAssembly) in the main process — pure JS/WASM, no native module to build — exposed to the renderer over IPC (local-only, no cloud in v1). The in-memory DB image is persisted to `foolscap.db` in `userData` after each write.
 - **Math engine:** `mathjs` (JS).
 - **Global hotkey / clipboard / tray / windows:** Electron `globalShortcut`, `clipboard`, `Tray`, and `BrowserWindow` — all driven from the main process (`electron/main.ts`).
 - **Renderer ↔ main bridge:** a `contextBridge` preload (`electron/preload.ts`) exposes `window.foolscap`; the renderer imports thin shims from `src/bridge/*` that reproduce the small API surface the app was written against.
@@ -102,7 +102,7 @@ foolscap/
 ├── electron/               # Electron main process (Node) — replaces src-tauri
 │   ├── main.ts             # windows, tray, Alt+A hotkey, single-instance, IPC
 │   ├── preload.ts          # contextBridge → window.foolscap
-│   └── db.ts               # SQLite (better-sqlite3) + schema/migration
+│   └── db.ts               # SQLite (sql.js / WASM) + schema/migration
 ├── src/                    # Renderer — Vue 3 + TypeScript
 │   ├── bridge/             # thin shims reproducing the old Tauri API surface
 │   │   ├── sql.ts          # Database.load/select/execute (→ IPC)

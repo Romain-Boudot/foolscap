@@ -7,8 +7,8 @@ import vue from "@vitejs/plugin-vue";
 //  - preload:  the context-bridge preload (electron/preload.ts)
 //  - renderer: the existing Vue + Vite app (index.html → src/main.ts)
 //
-// `externalizeDepsPlugin` keeps node/native deps (better-sqlite3) out of the
-// bundle so they're required from node_modules at runtime.
+// `externalizeDepsPlugin` keeps node deps (sql.js) out of the bundle so
+// they're required from node_modules at runtime.
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()],

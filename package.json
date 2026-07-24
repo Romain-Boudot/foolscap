@@ -13,8 +13,7 @@
     "dist": "npm run build && electron-builder",
     "dist:win": "npm run build && electron-builder --win",
     "dist:mac": "npm run build && electron-builder --mac",
-    "dist:linux": "npm run build && electron-builder --linux",
-    "postinstall": "electron-builder install-app-deps"
+    "dist:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.2",
@@ -22,14 +21,14 @@
     "@codemirror/language": "^6.10.8",
     "@codemirror/state": "^6.5.0",
     "@codemirror/view": "^6.36.1",
-    "better-sqlite3": "^11.8.1",
     "mathjs": "^15.2.0",
+    "sql.js": "^1.12.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "@types/better-sqlite3": "^7.6.12",
     "@types/node": "^22.10.5",
+    "@types/sql.js": "^1.4.9",
     "@vitejs/plugin-vue": "^5.2.1",
     "electron": "^33.2.1",
     "electron-builder": "^25.1.8",
@@ -53,10 +52,11 @@
       {
         "from": "resources",
         "to": "resources"
+      },
+      {
+        "from": "node_modules/sql.js/dist/sql-wasm.wasm",
+        "to": "sql-wasm.wasm"
       }
-    ],
-    "asarUnpack": [
-      "**/*.node"
     ],
     "win": {
       "target": [

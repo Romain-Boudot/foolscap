@@ -1,6 +1,6 @@
 // Drop-in replacement for `@tauri-apps/plugin-sql`. Same `Database.load()`
-// / `.select()` / `.execute()` shape, backed by better-sqlite3 in the main
-// process over IPC. There's a single shared DB, so `load()` ignores its
+// / `.select()` / `.execute()` shape, backed by sql.js in the main process
+// over IPC. There's a single shared DB, so `load()` ignores its
 // connection-string argument and returns a lightweight handle.
 
 export default class Database {

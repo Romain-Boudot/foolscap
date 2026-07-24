@@ -50,14 +50,13 @@ Unsigned for now; SmartScreen will ask "More info → Run anyway".
 ```sh
 git clone https://github.com/Romain-Boudot/foolscap
 cd foolscap
-npm install           # postinstall rebuilds better-sqlite3 for Electron
+npm install
 npm run dev
 ```
 
-You'll need [Node.js](https://nodejs.org) 18+. `npm install` runs
-`electron-builder install-app-deps`, which compiles the native SQLite module
-against Electron's ABI, so a C/C++ toolchain is required (Build Tools on
-Windows, Xcode CLT on macOS, `build-essential` on Linux).
+You'll need [Node.js](https://nodejs.org) 18+. That's it — storage uses
+SQLite compiled to WebAssembly (`sql.js`), so there's no native module to
+build and no C/C++ toolchain required.
 
 ```sh
 npm run dist          # produce platform installers in release/
@@ -67,7 +66,7 @@ npm test              # vitest — math evaluator, parsers, paste transforms
 ## Stack
 
 Electron · Vue 3 · TypeScript · Vite · CodeMirror 6 · mathjs · SQLite
-(better-sqlite3). Main process handles the windows, tray, global hotkey, and
+(`sql.js`, WASM). Main process handles the windows, tray, global hotkey, and
 storage; the renderer is the Vue app.
 
 See [CLAUDE.md](CLAUDE.md) for the architectural decisions, data model, and

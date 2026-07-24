@@ -430,8 +430,8 @@ function createAllWindows(): void {
   for (const label of NOTE_POOL) createWindow(label);
 }
 
-function init(): void {
-  initDb();
+async function init(): Promise<void> {
+  await initDb();
   registerIpc();
   createAllWindows();
 
@@ -450,7 +450,10 @@ if (!gotLock) {
 } else {
   // Second launch → surface the running instance instead of starting a new one.
   app.on("second-instance", showAllNotes);
-  app.whenReady().then(init);
+  app.whenReady().then(init).catch((err) => {
+    console.error("[init] fatal:", err);
+    app.quit();
+  });
 }
 
 app.on("before-quit", () => {
