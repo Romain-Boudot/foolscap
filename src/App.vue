@@ -245,7 +245,7 @@ useShortcuts({
   background: var(--bg-blur-layer);
 }
 .app.bg-solid {
-  background: rgb(20, 20, 23);
+  background: var(--bg-solid);
 }
 
 /* --- optional grid overlay --------------------------------------------

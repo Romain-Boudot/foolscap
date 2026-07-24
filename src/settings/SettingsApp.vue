@@ -132,7 +132,7 @@ useShortcuts({
   background: var(--bg-blur-layer);
 }
 .settings-app.bg-solid {
-  background: rgb(20, 20, 23);
+  background: var(--bg-solid);
 }
 
 .title-bar {

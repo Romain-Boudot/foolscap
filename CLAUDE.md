@@ -30,7 +30,7 @@ This is **not** Notion, Obsidian, or Evernote. It is **not** a knowledge base. I
 - **Global hotkey / clipboard / tray / windows:** Electron `globalShortcut`, `clipboard`, `Tray`, and `BrowserWindow` — all driven from the main process (`electron/main.ts`).
 - **Renderer ↔ main bridge:** a `contextBridge` preload (`electron/preload.ts`) exposes `window.foolscap`; the renderer imports thin shims from `src/bridge/*` that reproduce the small API surface the app was written against.
 
-**Migration note:** the app originally shipped on Tauri 2 (Rust backend, `src-tauri/`). It was migrated to Electron. The old Tauri-specific window tricks that don't have a portable Electron equivalent (the undocumented `SetWindowCompositionAttribute` acrylic, forced Win11 corners) are replaced by Electron built-ins (`setBackgroundMaterial` / `setVibrancy`, default `roundedCorners`), best-effort per platform.
+**Migration note:** the app originally shipped on Tauri 2 (Rust backend, `src-tauri/`). It was migrated to Electron. The Windows-specific window effects from the old backend — persistent acrylic (`SetWindowCompositionAttribute` + `ACCENT_ENABLE_ACRYLICBLURBEHIND`) and forced Win11 rounded corners (`DwmSetWindowAttribute`) — are restored in `electron/win-effects.ts` via `koffi` FFI (prebuilt N-API, no compiler needed), with a fallback to Electron's built-in `setBackgroundMaterial('acrylic')` if the native call is unavailable. macOS uses `setVibrancy`. All best-effort and guarded so a failure never breaks the app.
 
 ---
 

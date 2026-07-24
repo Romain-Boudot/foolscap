@@ -19,6 +19,7 @@ import {
 } from "electron";
 import path from "node:path";
 import { dbExecute, dbSelect, initDb } from "./db";
+import { roundCorners, setAcrylic } from "./win-effects";
 
 // ---- window model ---------------------------------------------------------
 
@@ -121,6 +122,10 @@ function createWindow(label: string): BrowserWindow {
 
   windows.set(label, win);
 
+  // Force Win11 rounded corners on the borderless/transparent window so the
+  // acrylic backdrop isn't clipped to a square. No-op off Windows.
+  roundCorners(win);
+
   win.on("focus", () => win.webContents.send("win:focus-changed", true));
   win.on("blur", () => win.webContents.send("win:focus-changed", false));
 
@@ -205,22 +210,34 @@ function toggleAllNotes(): void {
 
 // ---- native blur (best-effort port of acrylic.rs) -------------------------
 
-// The old Windows implementation called the undocumented
-// SetWindowCompositionAttribute to keep acrylic active even when unfocused.
-// Electron doesn't expose that, so we use the built-in materials instead:
-// `acrylic` on Windows, vibrancy on macOS. The theme-aware CSS tint layered
-// on top (`--bg-blur-layer`) still handles legibility. Best-effort — swallow
-// failures so a missing material never breaks the app.
-function applyBlur(win: BrowserWindow | null, on: boolean): void {
+// Windows: prefer the persistent acrylic (SetWindowCompositionAttribute, via
+// win-effects) — it stays blurred when unfocused, unlike the DWM material. If
+// that native call isn't available, fall back to Electron's built-in
+// setBackgroundMaterial('acrylic'). macOS: vibrancy. The theme-aware CSS tint
+// (`--bg-blur-layer`) layers on top for legibility either way. Best-effort.
+function applyBlur(
+  win: BrowserWindow | null,
+  on: boolean,
+  tintAbgr = 0,
+): void {
   if (!win) return;
-  try {
-    if (process.platform === "win32" && "setBackgroundMaterial" in win) {
-      win.setBackgroundMaterial(on ? "acrylic" : "none");
-    } else if (process.platform === "darwin") {
-      win.setVibrancy(on ? "under-window" : null);
+  if (process.platform === "win32") {
+    const done = setAcrylic(win, on, tintAbgr);
+    if (!done && "setBackgroundMaterial" in win) {
+      try {
+        win.setBackgroundMaterial(on ? "acrylic" : "none");
+      } catch {
+        /* material unsupported on this OS build — ignore */
+      }
     }
-  } catch {
-    /* material unsupported on this OS build — ignore */
+    return;
+  }
+  if (process.platform === "darwin") {
+    try {
+      win.setVibrancy(on ? "under-window" : null);
+    } catch {
+      /* vibrancy unsupported — ignore */
+    }
   }
 }
 
@@ -417,7 +434,17 @@ function registerIpc(): void {
     },
   );
 
-  ipcMain.handle("cmd:enable_blur", (e) => applyBlur(senderWindow(e), true));
+  ipcMain.handle(
+    "cmd:enable_blur",
+    (e, tint: { a?: number; b?: number; g?: number; r?: number } = {}) => {
+      const a = (tint.a ?? 0xb0) & 0xff;
+      const b = (tint.b ?? 0) & 0xff;
+      const g = (tint.g ?? 0) & 0xff;
+      const r = (tint.r ?? 0) & 0xff;
+      const abgr = ((a << 24) | (b << 16) | (g << 8) | r) >>> 0;
+      applyBlur(senderWindow(e), true, abgr);
+    },
+  );
   ipcMain.handle("cmd:disable_blur", (e) => applyBlur(senderWindow(e), false));
 }
 
